@@ -1,0 +1,26 @@
+[package]
+name = "nucleo-g431rb"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+embassy-stm32 = { version = "0.4.0", features = [ "defmt", "time-driver-any", "stm32g431rb", "memory-x", "unstable-pac", "exti", "single-bank"] }
+embassy-sync = { version = "0.7.2", features = ["defmt"] }
+embassy-executor = { version = "0.9.1", features = ["defmt", "arch-cortex-m", "executor-thread", "executor-interrupt"] }
+embassy-time = { version = "0.5.0", features = ["defmt", "defmt-timestamp-uptime", "tick-hz-1_000_000"] }
+
+defmt = "1.0.1"
+defmt-rtt = "1.0.0"
+
+cortex-m = { version = "0.7.6", features = ["critical-section-single-core"] }
+cortex-m-rt = "0.7.0"
+panic-probe = { version = "1.0.0", features = ["print-defmt"] }
+heapless = { version = "0.8", default-features = false }
+static_cell = { version = "2" }
+
+emcyphal = { version = "0.1.0", path = "../emcyphal", features = ["defmt"]}
+emcyphal-stm32-embassy = { version = "0.1.0", path = "../emcyphal-stm32-embassy", features = ["defmt"]}
+emcyphal-stm32-native = { version = "0.1.0", path = "../emcyphal-stm32-native", features = ["defmt", "stm32g4", "fdcan1"]}
+
+[profile.release]
+debug = 2

@@ -1,0 +1,24 @@
+[package]
+name = "emcyphal-stm32-embassy"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+embassy-stm32 = { version = "0.4.0", features = ["time"] }
+embassy-sync = { version = "0.7.2" }
+embassy-futures = { version = "0.1.2" }
+embassy-time = { version = "0.5.0" }
+
+embedded-can = "0.4.1"
+
+heapless = { version = "0.8", default-features = false }
+futures = { version =  "0.3.31",  default-features = false }
+defmt = { version = "1.0.1", optional = true }
+
+emcyphal-core = { version = "0.1.0", path = "../emcyphal-core" }
+emcyphal-driver = { version = "0.1.0", path = "../emcyphal-driver" }
+
+[features]
+defmt = ["dep:defmt", "embassy-sync/defmt", "embassy-stm32/defmt", "heapless/defmt-03", "emcyphal-core/defmt", "emcyphal-driver/defmt"]
+# Enable for stand-alone check and linter
+force-chip = ["embassy-stm32/stm32g473rc", "embassy-stm32/single-bank"]

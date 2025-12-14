@@ -1,0 +1,9 @@
+[target.'cfg(all(target_arch = "arm", target_os = "none"))']
+# replace STM32G431RBTx with your chip as listed in `probe-rs chip list`
+runner = "probe-rs run --chip STM32G431RBTx --preverify --connect-under-reset"
+
+[build]
+target = "thumbv7em-none-eabi"
+
+[env]
+DEFMT_LOG = "trace"

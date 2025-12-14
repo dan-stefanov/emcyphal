@@ -1,0 +1,8 @@
+[package]
+name = "emcyphal-encoding"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+
+canadensis_encoding = "0.3.1"
