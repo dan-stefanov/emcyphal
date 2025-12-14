@@ -369,7 +369,7 @@ dependencies = [
  "embedded-io-async",
  "futures-core",
  "futures-sink",
- "heapless",
+ "heapless 0.8.0",
 ]
 
 [[package]]
@@ -405,7 +405,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "80e2ee86063bd028a420a5fb5898c18c87a8898026da1d4c852af2c443d0a454"
 dependencies = [
  "embassy-executor-timer-queue",
- "heapless",
+ "heapless 0.8.0",
 ]
 
 [[package]]
@@ -521,7 +521,7 @@ dependencies = [
  "emcyphal-driver",
  "emcyphal-encoding",
  "futures",
- "heapless",
+ "heapless 0.9.2",
  "intrusive-collections",
 ]
 
@@ -561,7 +561,7 @@ dependencies = [
  "emcyphal-core",
  "emcyphal-driver",
  "futures",
- "heapless",
+ "heapless 0.9.2",
 ]
 
 [[package]]
@@ -675,7 +675,17 @@ version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0bfb9eb618601c89945a70e254898da93b13be0388091d42117462b265bb3fad"
 dependencies = [
- "defmt 0.3.100",
+ "hash32",
+ "stable_deref_trait",
+]
+
+[[package]]
+name = "heapless"
+version = "0.9.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2af2455f757db2b292a9b1768c4b70186d443bcb3b316252d6b540aec1cd89ed"
+dependencies = [
+ "defmt 1.0.1",
  "hash32",
  "stable_deref_trait",
 ]
@@ -740,7 +750,7 @@ dependencies = [
  "emcyphal",
  "emcyphal-stm32-embassy",
  "emcyphal-stm32-native",
- "heapless",
+ "heapless 0.9.2",
  "panic-probe",
  "static_cell",
 ]

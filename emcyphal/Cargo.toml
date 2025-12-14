@@ -9,7 +9,7 @@ embassy-futures = { version = "0.1.2" }
 embassy-time = { version = "0.5.0" }
 
 embedded-can = "0.4.1"
-heapless = { version = "0.8", default-features = false }
+heapless = { version = "0.9.1", default-features = false }
 futures = { version =  "0.3.31",  default-features = false }
 defmt = { version = "1.0.1", optional = true }
 intrusive-collections = { version = "0.9.7", default-features = false }
@@ -29,4 +29,4 @@ static_cell = { version = "2" }
 critical-section = { version = "1.1", features = ["std"] }
 
 [features]
-defmt = ["dep:defmt", "emcyphal-core/defmt", "emcyphal-driver/defmt", "embassy-sync/defmt", "heapless/defmt-03"]
+defmt = ["dep:defmt", "emcyphal-core/defmt", "emcyphal-driver/defmt", "embassy-sync/defmt", "heapless/defmt"]
