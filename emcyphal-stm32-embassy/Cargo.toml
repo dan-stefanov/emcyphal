@@ -2,6 +2,11 @@
 name = "emcyphal-stm32-embassy"
 version = "0.1.0"
 edition = "2024"
+description = "STM32 FDCAN driver adapter for Emcyphal network stack"
+repository = "https://github.com/dan-stefanov/emcyphal"
+authors = ["Dan Stefanov <danstefanov.u@gmail.com>"]
+categories = ["embedded", "no-std", "asynchronous", "network-programming"]
+license = "MIT OR Apache-2.0"
 
 [dependencies]
 embassy-stm32 = { version = "0.4.0", features = ["time"] }
@@ -12,13 +17,23 @@ embassy-time = { version = "0.5.0" }
 embedded-can = "0.4.1"
 
 heapless = { version = "0.9.1", default-features = false }
-futures = { version =  "0.3.31",  default-features = false }
+futures = { version = "0.3.31", default-features = false }
 defmt = { version = "1.0.1", optional = true }
 
 emcyphal-core = { version = "0.1.0", path = "../emcyphal-core" }
 emcyphal-driver = { version = "0.1.0", path = "../emcyphal-driver" }
 
 [features]
-defmt = ["dep:defmt", "embassy-sync/defmt", "embassy-stm32/defmt", "heapless/defmt", "emcyphal-core/defmt", "emcyphal-driver/defmt"]
+defmt = [
+    "dep:defmt",
+    "embassy-sync/defmt",
+    "embassy-stm32/defmt",
+    "heapless/defmt",
+    "emcyphal-core/defmt",
+    "emcyphal-driver/defmt",
+]
 # Enable for stand-alone check and linter
 force-chip = ["embassy-stm32/stm32g473rc", "embassy-stm32/single-bank"]
+
+[package.metadata.docs.rs]
+features = ["force-chip"]

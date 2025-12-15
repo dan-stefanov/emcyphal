@@ -2,6 +2,11 @@
 name = "nucleo-g431rb"
 version = "0.1.0"
 edition = "2024"
+description = "Emcyphal example project for Nucleo-g431rb board"
+repository = "https://github.com/dan-stefanov/emcyphal"
+authors = ["Dan Stefanov <danstefanov.u@gmail.com>"]
+categories = ["embedded", "no-std", "asynchronous", "network-programming"]
+license = "MIT OR Apache-2.0"
 
 [dependencies]
 embassy-stm32 = { version = "0.4.0", features = [ "defmt", "time-driver-any", "stm32g431rb", "memory-x", "unstable-pac", "exti", "single-bank"] }

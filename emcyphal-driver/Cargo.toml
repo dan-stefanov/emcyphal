@@ -2,6 +2,12 @@
 name = "emcyphal-driver"
 version = "0.1.0"
 edition = "2024"
+description = "Driver interface for Emcyphal network stack"
+repository = "https://github.com/dan-stefanov/emcyphal"
+authors = ["Dan Stefanov <danstefanov.u@gmail.com>"]
+categories = ["embedded", "no-std", "asynchronous", "network-programming"]
+license = "MIT OR Apache-2.0"
+
 
 [dependencies]
 embassy-time = { version = "0.5.0" }

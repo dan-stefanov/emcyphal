@@ -2,19 +2,40 @@
 name = "emcyphal-stm32-native"
 version = "0.1.0"
 edition = "2024"
+description = "STM32 FDCAN driver for Emcyphal network stack"
+repository = "https://github.com/dan-stefanov/emcyphal"
+authors = ["Dan Stefanov <danstefanov.u@gmail.com>"]
+categories = ["embedded", "no-std", "asynchronous", "network-programming"]
+license = "MIT OR Apache-2.0"
 
 [features]
-defmt = ["dep:defmt", "embassy-stm32/defmt", "embassy-time/defmt", "emcyphal-core/defmt", "emcyphal-driver/defmt"]
+defmt = [
+    "dep:defmt",
+    "embassy-stm32/defmt",
+    "embassy-time/defmt",
+    "emcyphal-core/defmt",
+    "emcyphal-driver/defmt",
+]
 stm32g4 = []
 fdcan1 = []
 fdcan2 = []
 fdcan3 = []
 
 # Enable for stand-alone check and linter
-force-chip = ["stm32g4", "fdcan1", "fdcan2", "fdcan3", "embassy-stm32/stm32g473rc", "embassy-stm32/single-bank"]
+force-chip = [
+    "stm32g4",
+    "fdcan1",
+    "fdcan2",
+    "fdcan3",
+    "embassy-stm32/stm32g473rc",
+    "embassy-stm32/single-bank",
+]
+
+[package.metadata.docs.rs]
+features = ["force-chip"]
 
 [dependencies]
-stm32-metapac = {version = "18"}
+stm32-metapac = { version = "18" }
 embassy-stm32 = { version = "0.4.0" }
 embassy-sync = { version = "0.7.2" }
 embassy-futures = { version = "0.1.2" }

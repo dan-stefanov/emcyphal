@@ -29,7 +29,9 @@
 //!
 //! # Examples
 //!
-//! See the `pubsub_native` example in the `nucleo-g431rb` project.
+//! See the `pubsub_native` example in the 
+//! [nucleo-g431rb](https://github.com/dan-stefanov/emcyphal/tree/emcyphal-stm32-native-v0.1.0/nucleo-g431rb)
+//! crate.
 #![no_std]
 
 #[cfg(not(feature = "stm32g4"))]

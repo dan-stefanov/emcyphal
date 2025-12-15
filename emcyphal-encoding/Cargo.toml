@@ -2,7 +2,11 @@
 name = "emcyphal-encoding"
 version = "0.1.0"
 edition = "2024"
+description = "Transfer encoding and decoding for Emcyphal network stack"
+repository = "https://github.com/dan-stefanov/emcyphal"
+authors = ["Dan Stefanov <danstefanov.u@gmail.com>"]
+categories = ["embedded", "no-std", "asynchronous", "network-programming"]
+license = "MIT OR Apache-2.0"
 
 [dependencies]
-
 canadensis_encoding = "0.5.0"

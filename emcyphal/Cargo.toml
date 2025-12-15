@@ -2,6 +2,12 @@
 name = "emcyphal"
 version = "0.1.0"
 edition = "2024"
+description = "Async Cyphal/CAN network stack for no_std environments"
+repository = "https://github.com/dan-stefanov/emcyphal"
+authors = ["Dan Stefanov <danstefanov.u@gmail.com>"]
+keywords = ["embedded", "can", "cyphal", "socket", "embassy"]
+categories = ["embedded", "no-std", "asynchronous", "network-programming"]
+license = "MIT OR Apache-2.0"
 
 [dependencies]
 embassy-sync = { version = "0.7.2" }
@@ -10,7 +16,7 @@ embassy-time = { version = "0.5.0" }
 
 embedded-can = "0.4.1"
 heapless = { version = "0.9.1", default-features = false }
-futures = { version =  "0.3.31",  default-features = false }
+futures = { version = "0.3.31", default-features = false }
 defmt = { version = "1.0.1", optional = true }
 intrusive-collections = { version = "0.9.7", default-features = false }
 
@@ -22,11 +28,20 @@ emcyphal-encoding = { version = "0.1.0", path = "../emcyphal-encoding" }
 futures-executor = "0.3.17"
 futures-task = "0.3.17"
 futures-test = "0.3.17"
-embassy-time = { version = "0.5.0", features = ["mock-driver", "generic-queue-16"] }
+embassy-time = { version = "0.5.0", features = [
+    "mock-driver",
+    "generic-queue-16",
+] }
 static_cell = { version = "2" }
 
 # Enable critical-section implementation for std, for tests
 critical-section = { version = "1.1", features = ["std"] }
 
 [features]
-defmt = ["dep:defmt", "emcyphal-core/defmt", "emcyphal-driver/defmt", "embassy-sync/defmt", "heapless/defmt"]
+defmt = [
+    "dep:defmt",
+    "emcyphal-core/defmt",
+    "emcyphal-driver/defmt",
+    "embassy-sync/defmt",
+    "heapless/defmt",
+]

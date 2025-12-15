@@ -25,9 +25,9 @@
 //!
 //! # Examples
 //!
-//! See the `pubsub_embassy` example in the `nucleo-g431rb` project. TODO: add GitHub link
-//!
-//! Check pubsub_embassy in `nucleo-g431rb` example project. TODO: add github link
+//! See the `pubsub_native` example in the 
+//! [nucleo-g431rb](https://github.com/dan-stefanov/emcyphal/tree/emcyphal-stm32-embassy-v0.1.0/nucleo-g431rb)
+//! crate.
 
 #![no_std]
 
