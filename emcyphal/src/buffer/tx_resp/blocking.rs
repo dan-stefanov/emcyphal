@@ -16,7 +16,7 @@ use crate::registry;
 use crate::time::Instant;
 use crate::utils::{PriorityMap, PriorityTrigger};
 
-const BUFFER_COUNT: usize = 1 + Priority::MAX_VALUE as usize;
+const BUFFER_COUNT: usize = 1 + Priority::MAX.into_u8() as usize;
 
 /// Blocking response buffer
 ///

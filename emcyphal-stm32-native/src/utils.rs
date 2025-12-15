@@ -2,7 +2,7 @@ use emcyphal_core::{Priority, PrioritySet};
 
 use crate::message_ram as ram;
 
-pub const PRIORITY_LEVEL_COUNT: usize = Priority::MAX_VALUE as usize + 1;
+pub const PRIORITY_LEVEL_COUNT: usize = Priority::MAX.into_u8() as usize + 1;
 
 #[derive(Debug, Clone)]
 pub struct PriorityMap<V> {
@@ -180,7 +180,7 @@ impl core::iter::Iterator for TxMailboxSetIter {
 #[derive(Debug, Default, Clone)]
 pub struct MailboxPriorityMap {
     forward: [Option<Priority>; (TxMailboxIdx::MAX_VALUE + 1) as usize],
-    backward: [Option<TxMailboxIdx>; (Priority::MAX_VALUE + 1) as usize],
+    backward: [Option<TxMailboxIdx>; (Priority::MAX.into_u8() + 1) as usize],
 }
 
 impl MailboxPriorityMap {

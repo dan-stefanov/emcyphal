@@ -248,7 +248,7 @@ mod tests {
     use crate::data_types::{ByteArray, Empty};
     use crate::frame::Data;
 
-    const SUBJECT: SubjectId = SubjectId::from_truncating(100);
+    const SUBJECT: SubjectId = SubjectId::new(100).unwrap();
     const PRIORITY: Priority = Priority::Nominal;
     const PRIORITY_MASK: PrioritySet = PrioritySet::new_eq(PRIORITY);
     const DEADLINE: Instant = Instant::from_millis(100);
@@ -289,7 +289,7 @@ mod tests {
     }
 
     fn tid(value: u8) -> TransferId {
-        TransferId::from_truncating(value)
+        TransferId::new(value).unwrap()
     }
 
     #[test]

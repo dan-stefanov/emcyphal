@@ -1,7 +1,7 @@
 use emcyphal_core::{Priority, PrioritySet};
 use heapless::Deque;
 
-pub const PRIORITY_LEVEL_COUNT: usize = Priority::MAX_VALUE as usize + 1;
+pub const PRIORITY_LEVEL_COUNT: usize = Priority::MAX.into_u8() as usize + 1;
 
 pub struct PriorityDeque<T, const N: usize> {
     queues: [Deque<T, N>; PRIORITY_LEVEL_COUNT],

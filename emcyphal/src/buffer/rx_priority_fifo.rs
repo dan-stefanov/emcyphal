@@ -27,7 +27,7 @@ struct TransferEntry {
 pub struct RxPriorityFifoInner<T: BufferType, const SN: usize, const TN: usize> {
     data_specifier: DataSpecifier,
     buffers_ptr: *mut T::Buffer,
-    sessions: IndexQueue<NodeId, Session, { NodeId::MAX_VALUE as usize }, SN>,
+    sessions: IndexQueue<NodeId, Session, { NodeId::MAX.into_u8() as usize }, SN>,
     session_buffer_base: u8,
     transfers: TransferQueue<TN>,
     readout_buffer_idx: u8,
@@ -35,7 +35,7 @@ pub struct RxPriorityFifoInner<T: BufferType, const SN: usize, const TN: usize> 
     priority_trigger: PriorityTrigger,
 }
 
-pub const MAX_SESSION_COUNT: usize = NodeId::MAX_VALUE as usize + 1;
+pub const MAX_SESSION_COUNT: usize = NodeId::MAX.into_u8() as usize + 1;
 pub const MAX_TRANSFER_COUNT: usize = 127;
 const _ASSERT_BUF_INDEX: usize = u8::MAX as usize - MAX_SESSION_COUNT - MAX_TRANSFER_COUNT;
 
@@ -344,7 +344,7 @@ mod tests {
     use crate::frame::{Data, DataSpecifier, Frame, Header};
 
     const TIMEOUT: Duration = Duration::from_micros(2_000_000);
-    const DATA_SPEC: DataSpecifier = DataSpecifier::Message(SubjectId::from_truncating(0));
+    const DATA_SPEC: DataSpecifier = DataSpecifier::Message(SubjectId::new(0).unwrap());
     const MTU: Mtu = Mtu::Classic;
 
     fn ts(us: u64) -> Instant {
@@ -388,7 +388,7 @@ mod tests {
         Frame {
             header: Header {
                 priority: priority,
-                data_spec: DataSpecifier::Message(SubjectId::from_truncating(0)),
+                data_spec: DATA_SPEC,
                 source,
                 destination: None,
             },

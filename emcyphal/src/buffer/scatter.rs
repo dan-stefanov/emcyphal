@@ -133,13 +133,14 @@ impl Scatter {
 mod tests {
     use super::*;
 
+    const TRANSFER_ID: TransferId = TransferId::new(27).unwrap();
+
     #[test]
     fn test_zero_frame_length() {
-        let transfer_id = TransferId::from_truncating(27);
         let buffer: [u8; 0] = [];
 
         let mut scatter = Scatter::new(
-            transfer_id,
+            TRANSFER_ID,
             &buffer,
             buffer.len(),
             TransferCrc::from(0xffff),
@@ -153,10 +154,9 @@ mod tests {
 
     #[test]
     fn test_non_full_single_frame() {
-        let transfer_id = TransferId::from_truncating(27);
         let buffer: [u8; 6] = [0, 1, 2, 3, 4, 5];
 
-        let mut scatter = Scatter::new(transfer_id, &buffer, buffer.len(), 0x8c18.into());
+        let mut scatter = Scatter::new(TRANSFER_ID, &buffer, buffer.len(), 0x8c18.into());
         assert_eq!(
             scatter.fetch_frame_data(&buffer, Mtu::Classic),
             Some(Data::new(&[0, 1, 2, 3, 4, 5, 0b1110_0000 + 27]).unwrap())
@@ -166,10 +166,9 @@ mod tests {
 
     #[test]
     fn test_full_single_frame() {
-        let transfer_id = TransferId::from_truncating(27);
         let buffer: [u8; 7] = [0, 1, 2, 3, 4, 5, 6];
 
-        let mut scatter = Scatter::new(transfer_id, &buffer, buffer.len(), 0x28c2.into());
+        let mut scatter = Scatter::new(TRANSFER_ID, &buffer, buffer.len(), 0x28c2.into());
         assert_eq!(
             scatter.fetch_frame_data(&buffer, Mtu::Classic),
             Some(Data::new(&[0, 1, 2, 3, 4, 5, 6, 0b1110_0000 + 27]).unwrap())
@@ -179,10 +178,9 @@ mod tests {
 
     #[test]
     fn test_minimum_double_frame() {
-        let transfer_id = TransferId::from_truncating(27);
         let buffer: [u8; 8] = [0, 1, 2, 3, 4, 5, 6, 7];
 
-        let mut scatter = Scatter::new(transfer_id, &buffer, buffer.len(), 0x178d.into());
+        let mut scatter = Scatter::new(TRANSFER_ID, &buffer, buffer.len(), 0x178d.into());
         assert_eq!(
             scatter.fetch_frame_data(&buffer, Mtu::Classic),
             Some(Data::new(&[0, 1, 2, 3, 4, 5, 6, 0b1010_0000 + 27]).unwrap())
@@ -196,10 +194,9 @@ mod tests {
 
     #[test]
     fn test_non_full_double_frame() {
-        let transfer_id = TransferId::from_truncating(27);
         let buffer: [u8; 11] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-        let mut scatter = Scatter::new(transfer_id, &buffer, buffer.len(), 0x1944.into());
+        let mut scatter = Scatter::new(TRANSFER_ID, &buffer, buffer.len(), 0x1944.into());
         assert_eq!(
             scatter.fetch_frame_data(&buffer, Mtu::Classic),
             Some(Data::new(&[0, 1, 2, 3, 4, 5, 6, 0b1010_0000 + 27]).unwrap())
@@ -213,10 +210,9 @@ mod tests {
 
     #[test]
     fn test_full_double_frame() {
-        let transfer_id = TransferId::from_truncating(27);
         let buffer: [u8; 12] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
-        let mut scatter = Scatter::new(transfer_id, &buffer, buffer.len(), 0x7673.into());
+        let mut scatter = Scatter::new(TRANSFER_ID, &buffer, buffer.len(), 0x7673.into());
         assert_eq!(
             scatter.fetch_frame_data(&buffer, Mtu::Classic),
             Some(Data::new(&[0, 1, 2, 3, 4, 5, 6, 0b1010_0000 + 27]).unwrap())
@@ -230,10 +226,9 @@ mod tests {
 
     #[test]
     fn test_minimal_triple_frame() {
-        let transfer_id = TransferId::from_truncating(27);
         let buffer: [u8; 13] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-        let mut scatter = Scatter::new(transfer_id, &buffer, buffer.len(), 0xacdd.into());
+        let mut scatter = Scatter::new(TRANSFER_ID, &buffer, buffer.len(), 0xacdd.into());
         assert_eq!(
             scatter.fetch_frame_data(&buffer, Mtu::Classic),
             Some(Data::new(&[0, 1, 2, 3, 4, 5, 6, 0b1010_0000 + 27]).unwrap())
@@ -251,10 +246,9 @@ mod tests {
 
     #[test]
     fn test_crc_only_triple_frame() {
-        let transfer_id = TransferId::from_truncating(27);
         let buffer: [u8; 14] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
-        let mut scatter = Scatter::new(transfer_id, &buffer, buffer.len(), 0x78cb.into());
+        let mut scatter = Scatter::new(TRANSFER_ID, &buffer, buffer.len(), 0x78cb.into());
         assert_eq!(
             scatter.fetch_frame_data(&buffer, Mtu::Classic),
             Some(Data::new(&[0, 1, 2, 3, 4, 5, 6, 0b1010_0000 + 27]).unwrap())
@@ -272,10 +266,9 @@ mod tests {
 
     #[test]
     fn test_non_full_triple_frame() {
-        let transfer_id = TransferId::from_truncating(27);
         let buffer: [u8; 15] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
-        let mut scatter = Scatter::new(transfer_id, &buffer, buffer.len(), 0xd551.into());
+        let mut scatter = Scatter::new(TRANSFER_ID, &buffer, buffer.len(), 0xd551.into());
         assert_eq!(
             scatter.fetch_frame_data(&buffer, Mtu::Classic),
             Some(Data::new(&[0, 1, 2, 3, 4, 5, 6, 0b1010_0000 + 27]).unwrap())
@@ -293,10 +286,9 @@ mod tests {
 
     #[test]
     fn test_padding_single_frame() {
-        let transfer_id = TransferId::from_truncating(27);
         let buffer: [u8; 8] = [0, 1, 2, 3, 4, 5, 6, 7];
 
-        let mut scatter = Scatter::new(transfer_id, &buffer, buffer.len(), 0x178d.into());
+        let mut scatter = Scatter::new(TRANSFER_ID, &buffer, buffer.len(), 0x178d.into());
         assert_eq!(
             scatter.fetch_frame_data(&buffer, Mtu::Fd),
             Some(Data::new(&[0, 1, 2, 3, 4, 5, 6, 7, 0, 0, 0, 0b1110_0000 + 27]).unwrap())
@@ -307,10 +299,9 @@ mod tests {
     #[rustfmt::skip]
     #[test]
     fn test_padding_multi_frame() {
-        let transfer_id = TransferId::from_truncating(27);
         let buffer: [u8; 69] = core::array::from_fn(|i| i.try_into().unwrap());
 
-        let mut scatter = Scatter::new(transfer_id, &buffer, buffer.len(), 0xd7de.into());
+        let mut scatter = Scatter::new(TRANSFER_ID, &buffer, buffer.len(), 0xd7de.into());
         let vec: heapless::Vec<u8, 64>  = (0u8..63).chain([0b1010_0000u8 + 27].iter().copied()).collect();
         assert_eq!(
             scatter.fetch_frame_data(&buffer, Mtu::Fd),

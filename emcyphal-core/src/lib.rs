@@ -60,17 +60,16 @@ pub enum Priority {
 impl Priority {
     pub const MIN: Priority = Priority::Exceptional;
     pub const MAX: Priority = Priority::Optional;
-    pub const MAX_VALUE: u8 = Self::MAX as u8;
 
-    pub const fn from_code(code: u8) -> Option<Priority> {
-        if code <= Self::MAX_VALUE {
-            Some(Priority::from_code_truncating(code))
+    pub const fn try_from_u8(code: u8) -> Option<Priority> {
+        if code <= Self::MAX.into_u8() {
+            Some(Priority::from_u8_truncating(code))
         } else {
             None
         }
     }
 
-    pub const fn from_code_truncating(code: u8) -> Priority {
+    pub const fn from_u8_truncating(code: u8) -> Priority {
         match code & 0x7 {
             0 => Priority::Exceptional,
             1 => Priority::Immediate,
@@ -84,18 +83,26 @@ impl Priority {
         }
     }
 
+    pub const fn into_u8(self) -> u8 {
+        self as u8
+    }
+
     pub const fn next(self) -> Option<Self> {
-        Self::from_code(self as u8 + 1)
+        Self::try_from_u8(self.into_u8() + 1)
     }
 
     pub const fn prev(self) -> Option<Self> {
-        Self::from_code((self as u8).wrapping_sub(1))
+        if let Some(code) = self.into_u8().checked_sub(1) {
+            Some(Self::from_u8_truncating(code))
+        } else {
+            None
+        }
     }
 }
 
 impl From<Priority> for u8 {
     fn from(value: Priority) -> Self {
-        value as u8
+        value.into_u8()
     }
 }
 
@@ -109,7 +116,7 @@ impl TryFrom<u8> for Priority {
     type Error = InvalidValue;
 
     fn try_from(value: u8) -> Result<Self, Self::Error> {
-        Self::from_code(value).ok_or(InvalidValue)
+        Self::try_from_u8(value).ok_or(InvalidValue)
     }
 }
 
@@ -139,15 +146,15 @@ impl PrioritySet {
     }
 
     pub const fn new_eq(priority: Priority) -> Self {
-        Self(1u8 << priority as u8)
+        Self(1u8 << priority.into_u8())
     }
 
     pub const fn new_ge(priority: Priority) -> Self {
-        Self(u8::MAX << priority as u8)
+        Self(u8::MAX << priority.into_u8())
     }
 
     pub const fn new_le(priority: Priority) -> Self {
-        Self(u8::MAX >> (Priority::MAX_VALUE - priority as u8))
+        Self(u8::MAX >> (Priority::MAX.into_u8() - priority.into_u8()))
     }
 
     pub const fn new_gt(priority: Priority) -> Self {
@@ -159,7 +166,7 @@ impl PrioritySet {
     }
 
     pub const fn contains(&self, priority: Priority) -> bool {
-        (self.0 >> priority as u8) & 0x1 != 0
+        (self.0 >> priority.into_u8()) & 0x1 != 0
     }
 
     pub const fn insert(&mut self, priority: Priority) {
@@ -171,12 +178,12 @@ impl PrioritySet {
     }
 
     pub const fn first(&self) -> Option<Priority> {
-        Priority::from_code(self.0.trailing_zeros() as u8)
+        Priority::try_from_u8(self.0.trailing_zeros() as u8)
     }
 
     pub const fn last(&self) -> Option<Priority> {
         let n = u8::BITS - self.0.leading_zeros();
-        Priority::from_code((n as u8).wrapping_sub(1))
+        Priority::try_from_u8((n as u8).wrapping_sub(1))
     }
 
     pub const fn is_empty(&self) -> bool {
@@ -251,26 +258,29 @@ impl core::iter::Iterator for PrioritySetIterator {
 pub struct NodeId(u8);
 
 impl NodeId {
-    pub const MAX_VALUE: u8 = 0x7f;
-    pub const MAX: NodeId = NodeId(Self::MAX_VALUE);
-    pub const ZERO: NodeId = NodeId(0);
+    const MAX_VALUE: u8 = 0x7f;
+    pub const MAX: NodeId = NodeId(0x7f);
 
     pub const fn new(value: u8) -> Option<Self> {
         if value <= Self::MAX_VALUE {
-            Some(Self::from_truncating(value))
+            Some(Self::from_u8_truncating(value))
         } else {
             None
         }
     }
 
-    pub const fn from_truncating(value: u8) -> Self {
+    pub const fn from_u8_truncating(value: u8) -> Self {
         Self(value & Self::MAX_VALUE)
+    }
+
+    pub const fn into_u8(self) -> u8 {
+        self.0
     }
 }
 
 impl From<NodeId> for u8 {
     fn from(value: NodeId) -> Self {
-        value.0
+        value.into_u8()
     }
 }
 
@@ -293,25 +303,29 @@ impl TryFrom<u8> for NodeId {
 pub struct SubjectId(u16);
 
 impl SubjectId {
-    pub const MAX_VALUE: u16 = 0x1fff;
+    const MAX_VALUE: u16 = 0x1fff;
     pub const MAX: SubjectId = SubjectId(Self::MAX_VALUE);
 
     pub const fn new(value: u16) -> Option<Self> {
         if value <= Self::MAX_VALUE {
-            Some(Self::from_truncating(value))
+            Some(Self::from_u16_truncating(value))
         } else {
             None
         }
     }
 
-    pub const fn from_truncating(value: u16) -> Self {
+    pub const fn from_u16_truncating(value: u16) -> Self {
         Self(value & Self::MAX_VALUE)
+    }
+
+    pub const fn into_u16(self) -> u16 {
+        self.0
     }
 }
 
 impl From<SubjectId> for u16 {
     fn from(value: SubjectId) -> Self {
-        value.0
+        value.into_u16()
     }
 }
 
@@ -328,25 +342,29 @@ impl TryFrom<u16> for SubjectId {
 pub struct ServiceId(u16);
 
 impl ServiceId {
-    pub const MAX_VALUE: u16 = 0x1ff;
+    const MAX_VALUE: u16 = 0x1ff;
     pub const MAX: SubjectId = SubjectId(Self::MAX_VALUE);
 
     pub const fn new(value: u16) -> Option<Self> {
         if value <= Self::MAX_VALUE {
-            Some(Self::from_truncating(value))
+            Some(Self::from_u16_truncating(value))
         } else {
             None
         }
     }
 
-    pub const fn from_truncating(value: u16) -> Self {
+    pub const fn from_u16_truncating(value: u16) -> Self {
         Self(value & Self::MAX_VALUE)
+    }
+
+    pub const fn into_u16(self) -> u16 {
+        self.0
     }
 }
 
 impl From<ServiceId> for u16 {
     fn from(value: ServiceId) -> Self {
-        value.0
+        value.into_u16()
     }
 }
 
@@ -363,7 +381,7 @@ impl TryFrom<u16> for ServiceId {
 pub struct TransferId(u8);
 
 impl TransferId {
-    pub const MAX_VALUE: u8 = 0x1f;
+    const MAX_VALUE: u8 = 0x1f;
     pub const MAX: TransferId = TransferId(Self::MAX_VALUE);
 
     /// TransferId of the first transfer in the session, see [1; 4.1.1.7]
@@ -371,14 +389,18 @@ impl TransferId {
 
     pub const fn new(value: u8) -> Option<Self> {
         if value <= Self::MAX_VALUE {
-            Some(Self::from_truncating(value))
+            Some(Self::from_u8_truncating(value))
         } else {
             None
         }
     }
 
-    pub const fn from_truncating(value: u8) -> Self {
+    pub const fn from_u8_truncating(value: u8) -> Self {
         Self(value & Self::MAX_VALUE)
+    }
+
+    pub const fn into_u8(self) -> u8 {
+        self.0
     }
 
     pub fn next(self) -> Self {
@@ -394,7 +416,7 @@ impl Default for TransferId {
 
 impl From<TransferId> for u8 {
     fn from(value: TransferId) -> Self {
-        value.0
+        value.into_u8()
     }
 }
 

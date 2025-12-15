@@ -12,9 +12,9 @@ use futures_task::LocalSpawn;
 use std::boxed::Box;
 use std::sync::atomic::{AtomicBool, Ordering};
 
-const REQUESTER_NODE: NodeId = NodeId::from_truncating(10);
-const RESPONDER_NODE: NodeId = NodeId::from_truncating(20);
-const SERVICE_ID: ServiceId = ServiceId::from_truncating(100);
+const REQUESTER_NODE: NodeId = NodeId::new(10).unwrap();
+const RESPONDER_NODE: NodeId = NodeId::new(20).unwrap();
+const SERVICE_ID: ServiceId = ServiceId::new(100).unwrap();
 const TIMEOUT: Duration = Duration::from_micros(2_000_000);
 const PRIORITY: Priority = Priority::Nominal;
 const MTU: Mtu = Mtu::Classic;

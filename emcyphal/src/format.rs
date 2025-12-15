@@ -73,7 +73,7 @@ impl TailByte {
     }
 
     pub fn transfer_id(&self) -> TransferId {
-        TransferId::from_truncating(self.0 >> Self::TRANSFER_ID)
+        TransferId::from_u8_truncating(self.0 >> Self::TRANSFER_ID)
     }
 }
 

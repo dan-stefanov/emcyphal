@@ -63,7 +63,7 @@ impl MessageCanId {
     }
 
     pub fn priority(self) -> Priority {
-        Priority::from_code_truncating((self.0 >> PRIORITY_OFFSET) as u8)
+        Priority::from_u8_truncating((self.0 >> PRIORITY_OFFSET) as u8)
     }
 
     pub fn set_priority(&mut self, value: Priority) {
@@ -84,7 +84,7 @@ impl MessageCanId {
     }
 
     pub fn subject(self) -> SubjectId {
-        SubjectId::from_truncating((self.0 >> MSG_SUBJECT_OFFSET) as u16)
+        SubjectId::from_u16_truncating((self.0 >> MSG_SUBJECT_OFFSET) as u16)
     }
 
     pub fn set_subject(&mut self, value: SubjectId) {
@@ -93,7 +93,7 @@ impl MessageCanId {
     }
 
     pub fn source(self) -> NodeId {
-        NodeId::from_truncating((self.0 >> SOURCE_OFFSET) as u8)
+        NodeId::from_u8_truncating((self.0 >> SOURCE_OFFSET) as u8)
     }
 
     pub fn set_source(&mut self, value: NodeId) {
@@ -140,7 +140,7 @@ impl ServiceCanId {
     }
 
     pub fn priority(self) -> Priority {
-        Priority::from_code_truncating((self.0 >> PRIORITY_OFFSET) as u8)
+        Priority::from_u8_truncating((self.0 >> PRIORITY_OFFSET) as u8)
     }
 
     pub fn set_priority(&mut self, value: Priority) {
@@ -161,7 +161,7 @@ impl ServiceCanId {
     }
 
     pub fn service(self) -> ServiceId {
-        ServiceId::from_truncating((self.0 >> SRV_SERVICE_OFFSET) as u16)
+        ServiceId::from_u16_truncating((self.0 >> SRV_SERVICE_OFFSET) as u16)
     }
 
     pub fn set_service(&mut self, value: ServiceId) {
@@ -170,7 +170,7 @@ impl ServiceCanId {
     }
 
     pub fn destination(self) -> NodeId {
-        NodeId::from_truncating((self.0 >> SRV_DESTINATION_OFFSET) as u8)
+        NodeId::from_u8_truncating((self.0 >> SRV_DESTINATION_OFFSET) as u8)
     }
 
     pub fn set_destination(&mut self, value: NodeId) {
@@ -179,7 +179,7 @@ impl ServiceCanId {
     }
 
     pub fn source(self) -> NodeId {
-        NodeId::from_truncating((self.0 >> SOURCE_OFFSET) as u8)
+        NodeId::from_u8_truncating((self.0 >> SOURCE_OFFSET) as u8)
     }
 
     pub fn set_source(&mut self, value: NodeId) {
@@ -201,7 +201,7 @@ impl From<ServiceCanId> for u32 {
 }
 
 pub fn decode_can_id_priority(can_id: u32) -> Priority {
-    Priority::from_code_truncating((can_id >> PRIORITY_OFFSET) as u8)
+    Priority::from_u8_truncating((can_id >> PRIORITY_OFFSET) as u8)
 }
 
 const fn lsb_mask(n: u32) -> u32 {

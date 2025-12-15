@@ -12,7 +12,7 @@ pub use index_queue::IndexQueue;
 pub use priority_queue::PriorityQueue;
 pub use stacked_array::{DuplexArray, TriplexArray};
 
-const PRIORITY_LEVEL_COUNT: usize = Priority::MAX_VALUE as usize + 1;
+const PRIORITY_LEVEL_COUNT: usize = Priority::MAX.into_u8() as usize + 1;
 
 #[derive(Default)]
 pub struct PriorityArray<T>([T; PRIORITY_LEVEL_COUNT]);

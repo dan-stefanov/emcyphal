@@ -2,7 +2,7 @@ use crate::core::{Priority, PrioritySet};
 use crate::utils::multi_class_queue::MultiClassQueue;
 
 const PRIORITY_CLASS: u8 = 0;
-const FREE_CLASS: u8 = PRIORITY_CLASS + Priority::MAX_VALUE + 1;
+const FREE_CLASS: u8 = PRIORITY_CLASS + Priority::MAX.into_u8() + 1;
 const CLASS_COUNT: usize = FREE_CLASS as usize + 1;
 
 pub const MAX_CAPACITY: usize = u8::MAX as usize + 1 - CLASS_COUNT;

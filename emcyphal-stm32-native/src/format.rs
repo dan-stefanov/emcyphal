@@ -48,7 +48,7 @@ pub fn make_msg_filter_pattern(val: Option<SubjectId>) -> u32 {
 
 pub fn decode_msg_filter_pattern(pattern: u32) -> Option<SubjectId> {
     if pattern & !MSG_FILTER_MASK == 0 {
-        Some(SubjectId::from_truncating(
+        Some(SubjectId::from_u16_truncating(
             (pattern >> MSG_SUBJECT_OFFSET) as u16,
         ))
     } else {
@@ -73,7 +73,7 @@ impl MessageCanId {
     }
 
     pub fn priority(self) -> Priority {
-        Priority::from_code_truncating((self.0 >> PRIORITY_OFFSET) as u8)
+        Priority::from_u8_truncating((self.0 >> PRIORITY_OFFSET) as u8)
     }
 
     pub fn set_priority(&mut self, value: Priority) {
@@ -94,7 +94,7 @@ impl MessageCanId {
     }
 
     pub fn subject(self) -> SubjectId {
-        SubjectId::from_truncating((self.0 >> MSG_SUBJECT_OFFSET) as u16)
+        SubjectId::from_u16_truncating((self.0 >> MSG_SUBJECT_OFFSET) as u16)
     }
 
     pub fn set_subject(&mut self, value: SubjectId) {
@@ -103,7 +103,7 @@ impl MessageCanId {
     }
 
     pub fn source(self) -> NodeId {
-        NodeId::from_truncating((self.0 >> SOURCE_OFFSET) as u8)
+        NodeId::from_u8_truncating((self.0 >> SOURCE_OFFSET) as u8)
     }
 
     pub fn set_source(&mut self, value: NodeId) {
@@ -135,7 +135,7 @@ pub fn make_srv_filter_pattern(dest: Option<NodeId>) -> u32 {
 
 pub fn decode_srv_filter_pattern(pattern: u32) -> Option<NodeId> {
     if pattern & !SRV_FILTER_MASK == 0 {
-        Some(NodeId::from_truncating(
+        Some(NodeId::from_u8_truncating(
             (pattern >> SRV_DESTINATION_OFFSET) as u8,
         ))
     } else {
@@ -160,7 +160,7 @@ impl ServiceCanId {
     }
 
     pub fn priority(self) -> Priority {
-        Priority::from_code_truncating((self.0 >> PRIORITY_OFFSET) as u8)
+        Priority::from_u8_truncating((self.0 >> PRIORITY_OFFSET) as u8)
     }
 
     pub fn set_priority(&mut self, value: Priority) {
@@ -181,7 +181,7 @@ impl ServiceCanId {
     }
 
     pub fn service(self) -> ServiceId {
-        ServiceId::from_truncating((self.0 >> SRV_SERVICE_OFFSET) as u16)
+        ServiceId::from_u16_truncating((self.0 >> SRV_SERVICE_OFFSET) as u16)
     }
 
     pub fn set_service(&mut self, value: ServiceId) {
@@ -190,7 +190,7 @@ impl ServiceCanId {
     }
 
     pub fn destination(self) -> NodeId {
-        NodeId::from_truncating((self.0 >> SRV_DESTINATION_OFFSET) as u8)
+        NodeId::from_u8_truncating((self.0 >> SRV_DESTINATION_OFFSET) as u8)
     }
 
     pub fn set_destination(&mut self, value: NodeId) {
@@ -199,7 +199,7 @@ impl ServiceCanId {
     }
 
     pub fn source(self) -> NodeId {
-        NodeId::from_truncating((self.0 >> SOURCE_OFFSET) as u8)
+        NodeId::from_u8_truncating((self.0 >> SOURCE_OFFSET) as u8)
     }
 
     pub fn set_source(&mut self, value: NodeId) {

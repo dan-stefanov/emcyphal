@@ -472,7 +472,7 @@ impl RegularInner {
             // subject removed after prev_entry
             unwrap!(next_subject(prev_entry.subject))
         } else {
-            SubjectId::from_truncating(0)
+            SubjectId::from_u16_truncating(0)
         };
         assert!(first_clean_up <= last_clean_up);
         let filter_update = FilterUpdate::RemoveSubjectRange([first_clean_up, last_clean_up]);
@@ -491,7 +491,7 @@ impl RegularInner {
             // subject removed after the prev_entry
             unwrap!(next_subject(prev_entry.subject))
         } else {
-            SubjectId::from_truncating(0)
+            SubjectId::from_u16_truncating(0)
         };
 
         let filter_update = FilterUpdate::RemoveSubjectRange([first_clean_up, SubjectId::MAX]);

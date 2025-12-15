@@ -79,9 +79,9 @@ async fn test_tx_receive(mut tx: link::Tx<'static>, complete: &'static AtomicBoo
         frame.header,
         Header {
             priority: PRIORITY,
-            data_spec: DataSpecifier::Message(SubjectId::from_truncating(0x1a)),
+            data_spec: DataSpecifier::Message(SubjectId::new(0x1a).unwrap()),
             destination: None,
-            source: Some(NodeId::from_truncating(0x0a)),
+            source: Some(NodeId::new(0x0a).unwrap()),
         }
     );
     assert_eq!(frame.data.as_ref(), [0x01, 0x00, 0x02, 0b1110_0000]);

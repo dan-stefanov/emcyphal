@@ -105,7 +105,7 @@ struct TransferEntry {
 pub struct Inner<T: BufferType, const SN: usize> {
     data_specifier: DataSpecifier,
     buffers_ptr: *mut T::Buffer,
-    sessions: IndexQueue<NodeId, Session, { NodeId::MAX_VALUE as usize }, SN>,
+    sessions: IndexQueue<NodeId, Session, { NodeId::MAX.into_u8() as usize }, SN>,
     session_buffer_base: u8,
     transfer: Option<TransferEntry>,
     transfer_min_timestamp: Instant,
@@ -115,7 +115,7 @@ pub struct Inner<T: BufferType, const SN: usize> {
     priority_trigger: PriorityTrigger,
 }
 
-pub const MAX_SESSION_COUNT: usize = NodeId::MAX_VALUE as usize + 1;
+pub const MAX_SESSION_COUNT: usize = NodeId::MAX.into_u8() as usize + 1;
 
 impl<T: BufferType, const SN: usize> Inner<T, SN> {
     const _ASSERT_MAX_SN: usize = MAX_SESSION_COUNT - SN;
@@ -382,7 +382,7 @@ mod tests {
     use crate::frame::{Data, DataSpecifier, Frame, Header};
 
     const TIMEOUT: Duration = Duration::from_micros(2_000_000);
-    const DATA_SPEC: DataSpecifier = DataSpecifier::Message(SubjectId::from_truncating(0));
+    const DATA_SPEC: DataSpecifier = DataSpecifier::Message(SubjectId::new(0).unwrap());
     const MTU: Mtu = Mtu::Classic;
 
     fn ts(us: u64) -> Instant {
@@ -426,7 +426,7 @@ mod tests {
         Frame {
             header: Header {
                 priority: priority,
-                data_spec: DataSpecifier::Message(SubjectId::from_truncating(0)),
+                data_spec: DATA_SPEC,
                 source,
                 destination: None,
             },
