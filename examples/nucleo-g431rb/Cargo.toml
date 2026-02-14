@@ -23,9 +23,9 @@ panic-probe = { version = "1.0.0", features = ["print-defmt"] }
 heapless = { version = "0.9.1", default-features = false, features = ["defmt"]}
 static_cell = { version = "2" }
 
-emcyphal = { version = "0.1.0", path = "../emcyphal", features = ["defmt"]}
-emcyphal-stm32-embassy = { version = "0.1.0", path = "../emcyphal-stm32-embassy", features = ["defmt"]}
-emcyphal-stm32-native = { version = "0.1.0", path = "../emcyphal-stm32-native", features = ["defmt", "stm32g4", "fdcan1"]}
+emcyphal = { version = "0.1.0", path = "../../emcyphal", features = ["defmt"]}
+emcyphal-stm32-embassy = { version = "0.1.0", path = "../../emcyphal-stm32-embassy", features = ["defmt"]}
+emcyphal-stm32-native = { version = "0.1.0", path = "../../emcyphal-stm32-native", features = ["defmt", "stm32g4", "fdcan1"]}
 
 [profile.release]
 debug = 2
