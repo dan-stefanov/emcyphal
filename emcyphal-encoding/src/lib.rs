@@ -1,5 +1,5 @@
 //! Dependency crate for auto-generate data types
-//! 
+//!
 //! Emcyphal stack users should no depend on this crate directly.
 
 #![no_std]

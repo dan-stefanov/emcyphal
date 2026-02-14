@@ -25,7 +25,7 @@
 //!
 //! # Examples
 //!
-//! See the `pubsub_native` example in the 
+//! See the `pubsub_native` example in the
 //! [nucleo-g431rb](https://github.com/dan-stefanov/emcyphal/tree/emcyphal-stm32-embassy-v0.1.0/nucleo-g431rb)
 //! crate.
 

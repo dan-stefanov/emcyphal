@@ -523,7 +523,7 @@ impl<'a> TxRunner<'a> {
                 },
                 async {
                     if let Some(priority) = loop_back_pending.first() {
-                        self.info.loop_back().send(frames[priority].clone()).await;
+                        self.info.loop_back().send(frames[priority]).await;
                         priority
                     } else {
                         pending().await
