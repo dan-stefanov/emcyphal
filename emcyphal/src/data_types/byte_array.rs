@@ -30,7 +30,7 @@ impl Deserialize for ByteArray {
 
             Ok(Self { bytes })
         } else {
-            return Err(DeserializeError::ArrayLength);
+            Err(DeserializeError::ArrayLength)
         }
     }
 }

@@ -102,7 +102,7 @@ struct TransferEntry {
     meta: TransferMeta,
     buffer_length: usize,
 }
-pub struct Inner<T: BufferType, const SN: usize> {
+struct Inner<T: BufferType, const SN: usize> {
     data_specifier: DataSpecifier,
     buffers_ptr: *mut T::Buffer,
     sessions: IndexQueue<NodeId, Session, { NodeId::MAX.into_u8() as usize }, SN>,
@@ -121,7 +121,7 @@ impl<T: BufferType, const SN: usize> Inner<T, SN> {
     const _ASSERT_MAX_SN: usize = MAX_SESSION_COUNT - SN;
 
     // Safety: The buffers must outlive the object
-    pub unsafe fn new(
+    unsafe fn new(
         data_specifier: DataSpecifier,
         timeout: Duration,
         buffers_ptr: *mut T::Buffer,
